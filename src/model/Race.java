@@ -1,4 +1,4 @@
-package model.races;
+package model;
 
 public class Race {
 }

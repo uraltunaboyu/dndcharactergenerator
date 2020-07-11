@@ -1,16 +1,22 @@
 package model;
 
 import exceptions.StatNotFound;
-import model.classes.Class;
-import model.races.Race;
 
 import java.util.*;
 
 public class Character {
-    public String characterName;
-    public Class characterClass;
-    public Race characterRace;
+    private String characterName;
+    private Class characterClass;
+    private Race characterRace;
+    private int characterHealth;
+    private int characterSpeed;
+    private String characterAlignment;
+    private enum dice {d4, d6, d8, d10, d12, d20};
+    private dice characterHitDie;
     private HashMap<String, Integer> characterStats;
+    private HashMap<String, Boolean> statProficiencies;
+    private HashMap<String, Integer> characterSkills;
+    private HashMap<String, Integer> skillProficiencies;
     private int characterLevel;
     private int proficiencyBonus;
 
@@ -22,46 +28,68 @@ public class Character {
         return proficiencyBonus;
     }
 
-    public Character(boolean normalRoll, int characterLevel) {
-        int[] stats = new int[6];
+    public Character(String characterName, Class characterClass, Race characterRace, String characterAlignment, dice characterHitDie, HashMap<String, Integer> characterStats, HashMap<String, Boolean> statProficiencies, HashMap<String, Integer> characterSkills, HashMap<String, Integer> skillProficiencies, int characterLevel) {
+        this.characterName = characterName;
+        this.characterClass = characterClass;
+        this.characterRace = characterRace;
+        this.characterAlignment = characterAlignment;
+        this.characterHitDie = characterHitDie;
+        this.characterStats = characterStats;
+        this.statProficiencies = statProficiencies;
+        this.characterSkills = characterSkills;
+        this.skillProficiencies = skillProficiencies;
         this.characterLevel = characterLevel;
-        for (int i = 0; i < 6; i++) {
-            stats[i] = (normalRoll ? generateStatNormal() : generateStatAdv());
-        }
-        //Proficiency bonus = (level/4) + 1, rounded up
-        proficiencyBonus = (characterLevel / 4) + 1 + (characterLevel % 4 == 0 ? 0 : 1);
-        //^ This is a really hacky way of simulating that. It sucks and I hate it.
+    }
+
+    private void populateStats(int [] stats) {
         characterStats.put("Strength", stats[0]);
         characterStats.put("Dexterity", stats[1]);
         characterStats.put("Constitution", stats[2]);
         characterStats.put("Intelligence", stats[3]);
         characterStats.put("Wisdom", stats[4]);
         characterStats.put("Charisma", stats[5]);
+
+        statProficiencies.put("Strength", false);
+        statProficiencies.put("Dexterity", false);
+        statProficiencies.put("Constitution", false);
+        statProficiencies.put("Intelligence", false);
+        statProficiencies.put("Wisdom", false);
+        statProficiencies.put("Charisma", false);
     }
 
-    private static int generateStatNormal() {
-        return (int) (Math.random() * 20 + 1);
+
+    public void setStat(String statName, int newStat) throws StatNotFound {
+        if(characterStats.containsKey(statName)) {
+            characterStats.replace(statName, newStat);
+        }
+        throw new StatNotFound();
     }
 
-    private static int generateStatAdv() {
-        int stat = 0;
-        ArrayList<Integer> rolls = new ArrayList<>();
-        for (int i = 0; i < 4; i++){
-            rolls.add((int) (Math.random() * 6 + 1));
+    public int getStat(String statName) throws StatNotFound {
+        if(characterStats.containsKey(statName)) {
+            return characterStats.get((statName));
         }
-        Collections.sort(rolls);
-        rolls.remove(0);
-        for (int roll: rolls) {
-            stat += roll;
+        throw new StatNotFound();
+    }
+
+    public boolean hasProficiency(String statName) throws StatNotFound {
+        if(statProficiencies.containsKey(statName)) {
+            return statProficiencies.get(statName);
         }
-        return stat;
+        throw new StatNotFound();
+    }
+
+    public void setProficiency(String statName) throws StatNotFound {
+        if(statProficiencies.containsKey(statName)) {
+            statProficiencies.replace(statName, true);
+        }
+        throw new StatNotFound();
     }
 
     public int getStatMod(String statName) throws StatNotFound {
         if (characterStats.containsKey(statName)) {
             return (characterStats.get(statName) - 10) / 2;
-        } else {
-            throw new StatNotFound();
         }
+        throw new StatNotFound();
     }
 }
