@@ -1,20 +1,16 @@
 package model;
 
+import exceptions.StatNotFound;
 import model.classes.Class;
 import model.races.Race;
 
 import java.util.*;
 
 public class Character {
+    public String characterName;
     public Class characterClass;
     public Race characterRace;
-    public static final int STR = 0;
-    public static final int DEX = 1;
-    public static final int CON = 2;
-    public static final int INT = 3;
-    public static final int WIS = 4;
-    public static final int CHA = 5;
-    public int[] stats = new int[6];
+    private HashMap<String, Integer> characterStats;
     private int characterLevel;
     private int proficiencyBonus;
 
@@ -27,6 +23,7 @@ public class Character {
     }
 
     public Character(boolean normalRoll, int characterLevel) {
+        int[] stats = new int[6];
         this.characterLevel = characterLevel;
         for (int i = 0; i < 6; i++) {
             stats[i] = (normalRoll ? generateStatNormal() : generateStatAdv());
@@ -34,6 +31,12 @@ public class Character {
         //Proficiency bonus = (level/4) + 1, rounded up
         proficiencyBonus = (characterLevel / 4) + 1 + (characterLevel % 4 == 0 ? 0 : 1);
         //^ This is a really hacky way of simulating that. It sucks and I hate it.
+        characterStats.put("Strength", stats[0]);
+        characterStats.put("Dexterity", stats[1]);
+        characterStats.put("Constitution", stats[2]);
+        characterStats.put("Intelligence", stats[3]);
+        characterStats.put("Wisdom", stats[4]);
+        characterStats.put("Charisma", stats[5]);
     }
 
     private static int generateStatNormal() {
@@ -54,7 +57,11 @@ public class Character {
         return stat;
     }
 
-    public static int getStatMod(int stat) {
-        return (stat - 10) / 2;
+    public int getStatMod(String statName) throws StatNotFound {
+        if (characterStats.containsKey(statName)) {
+            return (characterStats.get(statName) - 10) / 2;
+        } else {
+            throw new StatNotFound();
+        }
     }
 }
