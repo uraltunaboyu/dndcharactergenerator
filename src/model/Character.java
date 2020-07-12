@@ -1,11 +1,11 @@
 package model;
 
-import model.Constants.DICE;
+import model.Constants.Dice;
 
 import java.util.HashMap;
 
-import static model.Constants.SKILL_NAMES.*;
-import static model.Constants.STAT_NAMES.*;
+import static model.Constants.skillNames.*;
+import static model.Constants.statNames.*;
 
 public class Character {
     private String characterName;
@@ -14,12 +14,12 @@ public class Character {
     private int characterHealth;
     private int characterSpeed;
     private String characterAlignment;
-    private DICE characterHitDie;
-    private HashMap<Constants.STAT_NAMES, Integer> characterStats;
-    private HashMap<Constants.STAT_NAMES, Boolean> statProficiencies;
-    private HashMap<Constants.SKILL_NAMES, Integer> characterSkills;
-    private HashMap<Constants.SKILL_NAMES, Boolean> skillProficiencies;
-    public static HashMap<Constants.SKILL_NAMES, Constants.STAT_NAMES> skillStats;
+    private Dice characterHitDie;
+    private HashMap<Constants.statNames, Integer> characterStats;
+    private HashMap<Constants.statNames, Boolean> statProficiencies;
+    private HashMap<Constants.skillNames, Integer> characterSkills;
+    private HashMap<Constants.skillNames, Boolean> skillProficiencies;
+    public static HashMap<Constants.skillNames, Constants.statNames> skillStats;
     private int characterLevel;
     private int proficiencyBonus;
 
@@ -72,27 +72,27 @@ public class Character {
         characterSkills.put(Acrobatics, getStat(Strength) + ((hasProficiency(Strength)) ? proficiencyBonus : 0));
     }
 
-    public void calculateSkill(Constants.SKILL_NAMES skillName) {
+    public void calculateSkill(Constants.skillNames skillName) {
 
     }
 
-    public void setStat(Constants.STAT_NAMES statName, int newStat) {
+    public void setStat(Constants.statNames statName, int newStat) {
         characterStats.put(statName, newStat);
     }
 
-    public int getStat(Constants.STAT_NAMES statName) {
+    public int getStat(Constants.statNames statName) {
         return characterStats.get((statName));
     }
 
-    public boolean hasProficiency(Constants.STAT_NAMES statName) {
+    public boolean hasProficiency(Constants.statNames statName) {
         return statProficiencies.get(statName);
     }
 
-    public void setProficiency(Constants.STAT_NAMES statName) {
+    public void setProficiency(Constants.statNames statName) {
         statProficiencies.put(statName, true);
     }
 
-    public int getStatMod(Constants.STAT_NAMES statName) {
+    public int getStatMod(Constants.statNames statName) {
         return (characterStats.get(statName) - 10) / 2;
     }
 

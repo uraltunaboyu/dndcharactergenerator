@@ -1,26 +1,29 @@
 package model;
 
 public class Class {
-    private String[] firstnames;
-    private String[] lastnames;
-    private Constants.SKILL_NAMES skillProficiencies;
-    private Constants.STAT_NAMES statProficiencies;
-    private Constants.DICE hitDice;
+    private Constants.skillNames skillProficiencies;
+    private Constants.statNames statProficiencies;
+    private Constants.Dice hitDice;
+    private Constants.Armor armorProficiencies;
+    private Constants.Weapons weaponProficiencies;
+    private Constants.Tools toolProficiencies;
+    private Subclass[] subclasses;
 
-    public String generateName() {
-        return firstnames[(int) Math.floor(Math.random() * firstnames.length)] + " " +
-                lastnames[(int) Math.floor(Math.random() * lastnames.length)];
-    }
 
-    public Constants.SKILL_NAMES getSkillProficiencies() {
+
+    public Constants.skillNames getSkillProficiencies() {
         return skillProficiencies;
     }
 
-    public Constants.STAT_NAMES getStatProficiencies() {
+    public Constants.statNames getStatProficiencies() {
         return statProficiencies;
     }
 
-    public Constants.DICE getHitDice() {
+    public Subclass getRandomSubclass() {
+        return subclasses[(int) Math.floor(Math.random() * subclasses.length)];
+    }
+
+    public Constants.Dice getHitDice() {
         return hitDice;
     }
 }
