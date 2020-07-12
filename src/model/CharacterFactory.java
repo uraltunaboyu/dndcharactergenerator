@@ -9,13 +9,15 @@ public class CharacterFactory {
     private Subclass characterSubclass;
     private Race characterRace;
     private Subrace characterSubrace;
+    private int characterLevel;
     private int[] stats = new int[] {-1, -1, -1, -1, -1, -1};
+    private static final String[] alignments = new String[] {"Lawful Good, Neutral Good, Chaotic Good, " +
+            "Lawful Neutral, True Neutral, Chaotic Neutral, Lawful Evil, Neutral Evil, Chaotic Evil"};
     //Determines how stats are rolled. False is straight d20, true is 4d6 drop lowest.
     private boolean advantageRoll = false;
 
     //Proficiencies and skills will be generated as the class and race determines those.
     private boolean[] statProfs = new boolean[6];
-    private int[] skills = new int[18];
     private int[] skillStats = new int[18];
     private boolean[] skillProfs = new boolean[18];
 
@@ -28,7 +30,14 @@ public class CharacterFactory {
         characterRace = races[(int) Math.floor(Math.random() * races.length)];
         characterName = characterRace.generateName();
         characterSubclass = characterClass.getRandomSubclass();
+        characterLevel = 1;
         populateStats();
+    }
+
+    public Character build() {
+        return new Character(characterName, characterClass, characterRace,
+                alignments[(int) Math.random() * alignments.length], characterClass.getHitDie(), stats, statProfs,
+                skillProfs, characterLevel);
     }
 
     /*----------- Generate Data -----------*/
@@ -108,5 +117,9 @@ public class CharacterFactory {
 
     public void setCharacterSubrace(Subrace characterSubrace) {
         this.characterSubrace = characterSubrace;
+    }
+
+    public void setCharacterLevel(int characterLevel) {
+        this.characterLevel = characterLevel;
     }
 }

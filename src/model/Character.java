@@ -24,6 +24,22 @@ public class Character {
     private int characterLevel;
     private int proficiencyBonus;
 
+    public Character(String characterName, Class characterClass, Race characterRace, String characterAlignment,
+                     Dice characterHitDie, int[] stats, boolean[] statProficiencies, boolean[] skillProficiencies,
+                     int characterLevel) {
+        this.characterName = characterName;
+        this.characterClass = characterClass;
+        this.characterRace = characterRace;
+        this.characterAlignment = characterAlignment;
+        this.characterHitDie = characterHitDie;
+        this.characterLevel = characterLevel;
+        populateSkills();
+        populateSkillStats();
+        populateSkillProficiencies(skillProficiencies);
+        populateStats(stats);
+        populateStatProficiencies(statProficiencies);
+    }
+
     public int getCharacterLevel() {
         return characterLevel;
     }
@@ -75,9 +91,19 @@ public class Character {
         }
     }
 
-    private void populateSkillProficiencies() {
+    private void populateSkillProficiencies(boolean[] proficiencies) {
+        int i = 0;
         for(Constants.skillNames skill: skillStats.keySet()) {
-            skillProficiencies.put(skill, false);
+            skillProficiencies.put(skill, proficiencies[i]);
+            i++;
+        }
+    }
+
+    private void populateStatProficiencies(boolean[] proficiencies) {
+        int i = 0;
+        for(Constants.statNames stat: characterStats.keySet()) {
+            statProficiencies.put(stat, proficiencies[i]);
+            i++;
         }
     }
 
@@ -87,6 +113,11 @@ public class Character {
 
     public void setStat(Constants.statNames statName, int newStat) {
         characterStats.put(statName, newStat);
+    }
+
+    public void increaseStat(Constants.statNames statName, int increase) {
+        int oldValue = characterStats.get(statName);
+        characterStats.put(statName, oldValue + increase);
     }
 
     public int getStat(Constants.statNames statName) {
