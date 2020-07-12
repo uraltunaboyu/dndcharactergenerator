@@ -1,14 +1,15 @@
 package model;
 
 public class Race {
+    private String raceName;
     private String[] firstnames;
     private String[] lastnames;
     private Constants.StandardLanguages[] languages;
     private Subrace[] subraces;
 
     public String generateName() {
-        return firstnames[(int) Math.floor(Math.random() * firstnames.length)] + " " +
-                lastnames[(int) Math.floor(Math.random() * lastnames.length)];
+        return firstnames[(int) Math.random() * firstnames.length] + " " +
+                lastnames[(int) Math.random() * lastnames.length];
     }
 
     public Constants.StandardLanguages[] getLanguages() {
@@ -16,6 +17,6 @@ public class Race {
     }
 
     public Subrace getRandomSubrace() {
-        return subraces[(int) Math.floor(Math.random() * subraces.length)];
+        return subraces[(int) Math.random() * subraces.length];
     }
 }

@@ -3,6 +3,7 @@ package model;
 import model.Constants.Dice;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static model.Constants.skillNames.*;
 import static model.Constants.statNames.*;
@@ -60,20 +61,28 @@ public class Character {
         characterStats.put(Wisdom, stats[4]);
         characterStats.put(Charisma, stats[5]);
 
-        statProficiencies.put(Strength, false);
-        statProficiencies.put(Dexterity, false);
-        statProficiencies.put(Constitution, false);
-        statProficiencies.put(Intelligence, false);
-        statProficiencies.put(Wisdom, false);
-        statProficiencies.put(Charisma, false);
+        for (Constants.statNames stat: characterStats.keySet()) {
+            statProficiencies.put(stat, false);
+        }
     }
 
     private void populateSkills() {
-        characterSkills.put(Acrobatics, getStat(Strength) + ((hasProficiency(Strength)) ? proficiencyBonus : 0));
+        for (Map.Entry<Constants.skillNames, Constants.statNames> statSkillEntry: skillStats.entrySet()) {
+            Constants.skillNames skill = statSkillEntry.getKey();
+            Constants.statNames stat = statSkillEntry.getValue();
+            int skillLevel = getStat(stat) + (hasStatProficiency(stat)?  proficiencyBonus : 0);
+            characterSkills.put(skill, skillLevel);
+        }
     }
 
-    public void calculateSkill(Constants.skillNames skillName) {
+    private void populateSkillProficiencies() {
+        for(Constants.skillNames skill: skillStats.keySet()) {
+            skillProficiencies.put(skill, false);
+        }
+    }
 
+    public int calculateSkill(Constants.skillNames skillName) {
+        return characterSkills.get(skillName);
     }
 
     public void setStat(Constants.statNames statName, int newStat) {
@@ -84,11 +93,11 @@ public class Character {
         return characterStats.get((statName));
     }
 
-    public boolean hasProficiency(Constants.statNames statName) {
+    public boolean hasStatProficiency(Constants.statNames statName) {
         return statProficiencies.get(statName);
     }
 
-    public void setProficiency(Constants.statNames statName) {
+    public void setStatProficiency(Constants.statNames statName) {
         statProficiencies.put(statName, true);
     }
 

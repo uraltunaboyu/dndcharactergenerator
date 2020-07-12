@@ -1,6 +1,7 @@
 package model;
 
 public class Class {
+    private String className;
     private Constants.skillNames skillProficiencies;
     private Constants.statNames statProficiencies;
     private Constants.Dice hitDice;
@@ -20,7 +21,7 @@ public class Class {
     }
 
     public Subclass getRandomSubclass() {
-        return subclasses[(int) Math.floor(Math.random() * subclasses.length)];
+        return subclasses[(int) Math.random() * subclasses.length];
     }
 
     public Constants.Dice getHitDice() {
