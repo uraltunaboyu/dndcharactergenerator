@@ -3,6 +3,9 @@ package model;
 import exceptions.StatNotFound;
 
 import java.util.*;
+import model.Constants.SKILL_NAMES.*;
+import model.Constants.STAT_NAMES.*;
+import model.Constants.DICE.*;
 
 public class Character {
     private String characterName;
@@ -11,12 +14,12 @@ public class Character {
     private int characterHealth;
     private int characterSpeed;
     private String characterAlignment;
-    private enum dice {d4, d6, d8, d10, d12, d20};
     private dice characterHitDie;
     private HashMap<String, Integer> characterStats;
     private HashMap<String, Boolean> statProficiencies;
     private HashMap<String, Integer> characterSkills;
     private HashMap<String, Integer> skillProficiencies;
+    public static HashMap<String, String> skillStats;
     private int characterLevel;
     private int proficiencyBonus;
 
@@ -41,6 +44,26 @@ public class Character {
         this.characterLevel = characterLevel;
     }
 
+    private static void populateSkillStats() {
+        skillStats.put("Acrobatics", "Strength");
+        skillStats.put("Animal Handling", "Wisdom");
+        skillStats.put("Arcana", "Intelligence");
+        skillStats.put("Athletics", "Strength");
+        skillStats.put("Deception", "Charisma");
+        skillStats.put("History", "Intelligence");
+        skillStats.put("Insight", "Wisdom");
+        skillStats.put("Intimidation", "Intelligence");
+        skillStats.put("Investigation", "Intelligence");
+        skillStats.put("Medicine", "Wisdom");
+        skillStats.put("Nature", "Intelligence");
+        skillStats.put("Perception", "Wisdom");
+        skillStats.put("Persuasion", "Charisma");
+        skillStats.put("Religion", "Intelligence");
+        skillStats.put("Sleight of Hand", "Dexterity");
+        skillStats.put("Stealth", "Dexterity");
+        skillStats.put("Survival", "Wisdom");
+    }
+
     private void populateStats(int [] stats) {
         characterStats.put("Strength", stats[0]);
         characterStats.put("Dexterity", stats[1]);
@@ -57,6 +80,13 @@ public class Character {
         statProficiencies.put("Charisma", false);
     }
 
+    private void populateSkills() {
+        characterSkills.put("Acrobatics")
+    }
+
+    public void calculateSkill(String skillName) {
+
+    }
 
     public void setStat(String statName, int newStat) throws StatNotFound {
         if(characterStats.containsKey(statName)) {
