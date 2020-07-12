@@ -5,4 +5,5 @@ public class Constants {
     public static enum STAT_NAMES {Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma};
     public static enum SKILL_NAMES {Acrobatics, AnimalHandling, Arcana, Athletics, Deception, History, Insight, Intimidation,
         Investigation, Medicine, Nature, Perception, Performance, Persuasion, Religion, SleightOfHand, Stealth, Survival};
+
 }

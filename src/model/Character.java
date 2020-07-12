@@ -44,6 +44,7 @@ public class Character {
         skillStats.put(Medicine, Wisdom);
         skillStats.put(Nature, Intelligence);
         skillStats.put(Perception, Wisdom);
+        skillStats.put(Performance, Charisma);
         skillStats.put(Persuasion, Charisma);
         skillStats.put(Religion, Intelligence);
         skillStats.put(SleightOfHand, Dexterity);
