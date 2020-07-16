@@ -1,17 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
-
-import static model.Constants.Armor.*;
-import static model.Constants.StandardLanguages.Common;
-import static model.Constants.StandardLanguages.Dwarvish;
-import static model.Constants.Tools.*;
-import static model.Constants.Weapons.Martial;
-import static model.Constants.Weapons.Simple;
-import static model.Constants.skillNames.*;
-import static model.Constants.statNames.Charisma;
-import static model.Constants.statNames.Wisdom;
+import java.util.List;
 
 public class CharacterFactory {
     private String characterName;
@@ -21,8 +13,9 @@ public class CharacterFactory {
     private Subrace characterSubrace;
     private int characterLevel;
     private int[] stats = new int[] {-1, -1, -1, -1, -1, -1};
-    private static final String[] alignments = new String[] {"Lawful Good, Neutral Good, Chaotic Good, " +
-            "Lawful Neutral, True Neutral, Chaotic Neutral, Lawful Evil, Neutral Evil, Chaotic Evil"};
+    public static final String[] alignments = new String[] {"Lawful Good", "Neutral Good", "Chaotic Good",
+            "Lawful Neutral", "True Neutral", "Chaotic Neutral", "Lawful Evil", "Neutral Evil", "Chaotic Evil"};
+    private String characterAlignment;
     //Determines how stats are rolled. False is straight d20, true is 4d6 drop lowest.
     private boolean advantageRoll = false;
 
@@ -36,54 +29,28 @@ public class CharacterFactory {
     private ArrayList<Race> races = new ArrayList<>();
 
     public CharacterFactory() {
-        createClasses();
-        createSubclasses();
-        createRaces();
-        createSubraces();
-        characterClass = classes.get((int) Math.floor(Math.random() * classes.size()));
-        characterRace = races.get((int) Math.floor(Math.random() * races.size()));
-        characterName = characterRace.generateName();
+        characterAlignment = alignments[(int) (Math.random() * alignments.length)];
         characterLevel = 1;
         populateStats();
     }
 
     public Character build() {
+        fillStatProfArray();
         return new Character(characterName, characterClass, characterRace,
-                alignments[(int) Math.random() * alignments.length], characterClass.getHitDie(), stats, statProfs,
+                characterAlignment, characterClass.getHitDie(), stats, statProfs,
                 skillProfs, characterLevel);
-    }
-
-    /*----------- Generate Data -----------*/
-
-    private void createClasses() {
-        //TODO: Write all classes in
-        addToClasses(new Class("Paladin", new Constants.skillNames[] {Athletics, Insight, Intimidation, Medicine, Persuasion, Intimidation},
-                new Constants.statNames[] {Wisdom, Charisma}, Constants.Dice.d10, new Constants.Armor[]{Light, Medium, Heavy, Shield},
-                new Constants.Weapons[] {Simple, Martial}));
-    }
-
-    private void createSubclasses() {
-        //TODO: Write all subclasses
-    }
-
-    private void createRaces() {
-        //TODO: Write all races in
-        addToRaces(new Race("Dwarf", new String[] {"test1", "test2"}, new String[] {"test3", "test4"},
-                new Constants.StandardLanguages[]{Common, Dwarvish}, new Constants.ExoticLanguages[0],
-                new Constants.Tools[] {SmithTools, BrewerSupplies, MasonTools}, new int[]{0,0,2,0,0,0}, 25));
-    }
-
-    private void createSubraces() {
-        //TODO: Write all subraces
     }
 
     /*----------- Add classes/races to arrays -----------*/
     public void addToClasses(Class characterClass) {
         classes.add(characterClass);
+        this.characterClass = classes.get((int) (Math.random() * classes.size()));
     }
 
     public void addToRaces(Race characterRace) {
         races.add(characterRace);
+        this.characterRace = races.get((int) (Math.random() * races.size()));
+        characterName = characterRace.generateName();
     }
 
     /*----------- Manage Stats -----------*/
@@ -121,6 +88,20 @@ public class CharacterFactory {
         return stat;
     }
 
+    /*----------- Populate Stat Arrays for build() -----------*/
+    private void fillStatProfArray() {
+        List<Constants.statNames> statProfsAsList = Arrays.asList(characterClass.getStatProficiencies());
+        int i = 0;
+        for(Constants.statNames stat : Constants.statNames.values()) {
+            statProfs[i] = statProfsAsList.contains(stat);
+            i++;
+        }
+    }
+
+    private void fillSkillStatArray() {
+
+    }
+
     /*----------- Set Factory Props -----------*/
 
     public void setAdvantageRoll() {
@@ -129,6 +110,10 @@ public class CharacterFactory {
 
     public void setCharacterName(String characterName) {
         this.characterName = characterName;
+    }
+
+    public void setCharacterAlignment(int alignmentCode) {
+        characterAlignment = alignments[alignmentCode];
     }
 
     public void setCharacterClass(Class characterClass) {

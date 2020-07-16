@@ -3,10 +3,8 @@ package model;
 import model.Constants.Dice;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
-
-import static model.Constants.skillNames.*;
-import static model.Constants.statNames.*;
 
 public class Character {
     private String characterName;
@@ -16,11 +14,11 @@ public class Character {
     private int characterSpeed;
     private String characterAlignment;
     private Dice characterHitDie;
-    private HashMap<Constants.statNames, Integer> characterStats = new HashMap<>();
-    private HashMap<Constants.statNames, Boolean> statProficiencies = new HashMap<>();
-    private HashMap<Constants.skillNames, Integer> characterSkills = new HashMap<>();
-    private HashMap<Constants.skillNames, Boolean> skillProficiencies = new HashMap<>();
-    public static HashMap<Constants.skillNames, Constants.statNames> skillStats = new HashMap<>();
+    private HashMap<Constants.statNames, Integer> characterStats = new LinkedHashMap<>();
+    private HashMap<Constants.statNames, Boolean> statProficiencies = new LinkedHashMap<>();
+    private HashMap<Constants.skillNames, Integer> characterSkills = new LinkedHashMap<>();
+    private HashMap<Constants.skillNames, Boolean> skillProficiencies = new LinkedHashMap<>();
+    public static HashMap<Constants.skillNames, Constants.statNames> skillStats = new LinkedHashMap<>();
     private int characterLevel;
     private int proficiencyBonus;
 
@@ -49,35 +47,17 @@ public class Character {
     }
 
     private static void populateSkillStats() {
-        skillStats.put(Acrobatics, Strength);
-        skillStats.put(AnimalHandling, Wisdom);
-        skillStats.put(Arcana, Intelligence);
-        skillStats.put(Athletics, Strength);
-        skillStats.put(Deception, Charisma);
-        skillStats.put(History, Intelligence);
-        skillStats.put(Insight, Wisdom);
-        skillStats.put(Intimidation, Intelligence);
-        skillStats.put(Investigation, Intelligence);
-        skillStats.put(Medicine, Wisdom);
-        skillStats.put(Nature, Intelligence);
-        skillStats.put(Perception, Wisdom);
-        skillStats.put(Performance, Charisma);
-        skillStats.put(Persuasion, Charisma);
-        skillStats.put(Religion, Intelligence);
-        skillStats.put(SleightOfHand, Dexterity);
-        skillStats.put(Stealth, Dexterity);
-        skillStats.put(Survival, Wisdom);
+
     }
 
     private void populateStats(int[] stats) {
-        characterStats.put(Strength, stats[0]);
-        characterStats.put(Dexterity, stats[1]);
-        characterStats.put(Constitution, stats[2]);
-        characterStats.put(Intelligence, stats[3]);
-        characterStats.put(Wisdom, stats[4]);
-        characterStats.put(Charisma, stats[5]);
+        int i = 0;
+        for(Constants.statNames stat : Constants.statNames.values()) {
+            characterStats.put(stat, stats[i]);
+            i++;
+        }
 
-        for (Constants.statNames stat: characterStats.keySet()) {
+        for (Constants.statNames stat: Constants.statNames.values()) {
             statProficiencies.put(stat, false);
         }
     }
