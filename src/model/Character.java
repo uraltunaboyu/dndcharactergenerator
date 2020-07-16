@@ -16,11 +16,11 @@ public class Character {
     private int characterSpeed;
     private String characterAlignment;
     private Dice characterHitDie;
-    private HashMap<Constants.statNames, Integer> characterStats;
-    private HashMap<Constants.statNames, Boolean> statProficiencies;
-    private HashMap<Constants.skillNames, Integer> characterSkills;
-    private HashMap<Constants.skillNames, Boolean> skillProficiencies;
-    public static HashMap<Constants.skillNames, Constants.statNames> skillStats;
+    private HashMap<Constants.statNames, Integer> characterStats = new HashMap<>();
+    private HashMap<Constants.statNames, Boolean> statProficiencies = new HashMap<>();
+    private HashMap<Constants.skillNames, Integer> characterSkills = new HashMap<>();
+    private HashMap<Constants.skillNames, Boolean> skillProficiencies = new HashMap<>();
+    public static HashMap<Constants.skillNames, Constants.statNames> skillStats = new HashMap<>();
     private int characterLevel;
     private int proficiencyBonus;
 
@@ -33,11 +33,11 @@ public class Character {
         this.characterAlignment = characterAlignment;
         this.characterHitDie = characterHitDie;
         this.characterLevel = characterLevel;
-        populateSkills();
         populateSkillStats();
-        populateSkillProficiencies(skillProficiencies);
         populateStats(stats);
+        populateSkills();
         populateStatProficiencies(statProficiencies);
+        populateSkillProficiencies(skillProficiencies);
     }
 
     public int getCharacterLevel() {
@@ -136,5 +136,32 @@ public class Character {
         return (characterStats.get(statName) - 10) / 2;
     }
 
+    public String getCharacterName() {
+        return characterName;
+    }
+
+    public Class getCharacterClass() {
+        return characterClass;
+    }
+
+    public Race getCharacterRace() {
+        return characterRace;
+    }
+
+    public int getCharacterHealth() {
+        return characterHealth;
+    }
+
+    public int getCharacterSpeed() {
+        return characterSpeed;
+    }
+
+    public String getCharacterAlignment() {
+        return characterAlignment;
+    }
+
+    public Dice getCharacterHitDie() {
+        return characterHitDie;
+    }
 }
 

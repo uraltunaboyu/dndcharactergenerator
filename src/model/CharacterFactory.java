@@ -3,6 +3,16 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static model.Constants.Armor.*;
+import static model.Constants.StandardLanguages.Common;
+import static model.Constants.StandardLanguages.Dwarvish;
+import static model.Constants.Tools.*;
+import static model.Constants.Weapons.Martial;
+import static model.Constants.Weapons.Simple;
+import static model.Constants.skillNames.*;
+import static model.Constants.statNames.Charisma;
+import static model.Constants.statNames.Wisdom;
+
 public class CharacterFactory {
     private String characterName;
     private Class characterClass;
@@ -22,14 +32,17 @@ public class CharacterFactory {
     private boolean[] skillProfs = new boolean[18];
 
     //For now, placeholder arrays will do.
-    private Class[] classes = new Class[10];
-    private Race[] races = new Race[10];
+    private ArrayList<Class> classes = new ArrayList<>();
+    private ArrayList<Race> races = new ArrayList<>();
 
     public CharacterFactory() {
-        characterClass = classes[(int) Math.floor(Math.random() * classes.length)];
-        characterRace = races[(int) Math.floor(Math.random() * races.length)];
+        createClasses();
+        createSubclasses();
+        createRaces();
+        createSubraces();
+        characterClass = classes.get((int) Math.floor(Math.random() * classes.size()));
+        characterRace = races.get((int) Math.floor(Math.random() * races.size()));
         characterName = characterRace.generateName();
-        characterSubclass = characterClass.getRandomSubclass();
         characterLevel = 1;
         populateStats();
     }
@@ -44,6 +57,9 @@ public class CharacterFactory {
 
     private void createClasses() {
         //TODO: Write all classes in
+        addToClasses(new Class("Paladin", new Constants.skillNames[] {Athletics, Insight, Intimidation, Medicine, Persuasion, Intimidation},
+                new Constants.statNames[] {Wisdom, Charisma}, Constants.Dice.d10, new Constants.Armor[]{Light, Medium, Heavy, Shield},
+                new Constants.Weapons[] {Simple, Martial}));
     }
 
     private void createSubclasses() {
@@ -52,10 +68,22 @@ public class CharacterFactory {
 
     private void createRaces() {
         //TODO: Write all races in
+        addToRaces(new Race("Dwarf", new String[] {"test1", "test2"}, new String[] {"test3", "test4"},
+                new Constants.StandardLanguages[]{Common, Dwarvish}, new Constants.ExoticLanguages[0],
+                new Constants.Tools[] {SmithTools, BrewerSupplies, MasonTools}, new int[]{0,0,2,0,0,0}, 25));
     }
 
     private void createSubraces() {
         //TODO: Write all subraces
+    }
+
+    /*----------- Add classes/races to arrays -----------*/
+    public void addToClasses(Class characterClass) {
+        classes.add(characterClass);
+    }
+
+    public void addToRaces(Race characterRace) {
+        races.add(characterRace);
     }
 
     /*----------- Manage Stats -----------*/
