@@ -21,7 +21,6 @@ public class CharacterFactory {
 
     //Proficiencies and skills will be generated as the class and race determines those.
     private boolean[] statProfs = new boolean[6];
-    private int[] skillStats = new int[18];
     private boolean[] skillProfs = new boolean[18];
 
     //For now, placeholder arrays will do.
@@ -36,6 +35,7 @@ public class CharacterFactory {
 
     public Character build() {
         fillStatProfArray();
+        fillSkillProfArray();
         return new Character(characterName, characterClass, characterRace,
                 characterAlignment, characterClass.getHitDie(), stats, statProfs,
                 skillProfs, characterLevel);
@@ -98,8 +98,13 @@ public class CharacterFactory {
         }
     }
 
-    private void fillSkillStatArray() {
-
+    private void fillSkillProfArray() {
+        List<Constants.skillNames> skillProfsAsList = Arrays.asList(characterClass.getRandomSkillProficiencies());
+        int i = 0;
+        for(Constants.skillNames skill : Constants.skillNames.values()) {
+            skillProfs[i] = skillProfsAsList.contains(skill);
+            i++;
+        }
     }
 
     /*----------- Set Factory Props -----------*/

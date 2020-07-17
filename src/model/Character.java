@@ -18,7 +18,7 @@ public class Character {
     private HashMap<Constants.statNames, Boolean> statProficiencies = new LinkedHashMap<>();
     private HashMap<Constants.skillNames, Integer> characterSkills = new LinkedHashMap<>();
     private HashMap<Constants.skillNames, Boolean> skillProficiencies = new LinkedHashMap<>();
-    public static HashMap<Constants.skillNames, Constants.statNames> skillStats = new LinkedHashMap<>();
+    public static Map<Constants.skillNames, Constants.statNames> skillStats = Constants.skillStats;
     private int characterLevel;
     private int proficiencyBonus;
 
@@ -31,7 +31,6 @@ public class Character {
         this.characterAlignment = characterAlignment;
         this.characterHitDie = characterHitDie;
         this.characterLevel = characterLevel;
-        populateSkillStats();
         populateStats(stats);
         populateSkills();
         populateStatProficiencies(statProficiencies);
@@ -46,9 +45,6 @@ public class Character {
         return proficiencyBonus;
     }
 
-    private static void populateSkillStats() {
-
-    }
 
     private void populateStats(int[] stats) {
         int i = 0;
@@ -106,6 +102,10 @@ public class Character {
 
     public boolean hasStatProficiency(Constants.statNames statName) {
         return statProficiencies.get(statName);
+    }
+
+    public boolean hasSkillProficiency(Constants.skillNames skillName) {
+        return skillProficiencies.get(skillName);
     }
 
     public void setStatProficiency(Constants.statNames statName) {

@@ -19,37 +19,36 @@ import static model.Constants.statNames.Wisdom;
 
 public class CharacterCreator {
 
-    CharacterFactory characterFactory;
+    static CharacterFactory characterFactory = new CharacterFactory();
 
     public static void main(String[] args) {
-        //TODO: Start writing a CLI to walk the player through character generation.
-        //TODO: Figure out a PDF interface to create a viable output.
+        
     }
 
-    private void createData() {
+    private static void createData() {
         createClasses();
         createSubclasses();
         createRaces();
         createSubraces();
     }
 
-    private void createClasses() {
+    private static void createClasses() {
         characterFactory.addToClasses(new Class("Paladin", new Constants.skillNames[] {Athletics, Insight, Intimidation, Medicine, Persuasion, Intimidation},
                 new Constants.statNames[] {Wisdom, Charisma}, Constants.Dice.d10, new Constants.Armor[]{Light, Medium, Heavy, Shield},
                 new Constants.Weapons[] {Simple, Martial}));
     }
 
-    private void createSubclasses() {
+    private static void createSubclasses() {
 
     }
 
-    private void createRaces() {
+    private static void createRaces() {
         characterFactory.addToRaces(new Race("Dwarf", new String[] {"test1", "test2"}, new String[] {"test3", "test4"},
                 new Constants.StandardLanguages[]{Common, Dwarvish}, new Constants.ExoticLanguages[0],
                 new Constants.Tools[] {SmithTools, BrewerSupplies, MasonTools}, new int[]{0,0,2,0,0,0}, 25));
     }
 
-    private void createSubraces() {
+    private static void createSubraces() {
 
     }
 }
