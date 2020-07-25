@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class Character {
     private String characterName;
+    private boolean isMale;
     private Class characterClass;
     private Race characterRace;
     private int characterHealth;
@@ -22,10 +23,11 @@ public class Character {
     private int characterLevel;
     private int proficiencyBonus;
 
-    public Character(String characterName, Class characterClass, Race characterRace, String characterAlignment,
+    public Character(String characterName, boolean isMale, Class characterClass, Race characterRace, String characterAlignment,
                      Dice characterHitDie, int[] stats, boolean[] statProficiencies, boolean[] skillProficiencies,
                      int characterLevel) {
         this.characterName = characterName;
+        this.isMale = isMale;
         this.characterClass = characterClass;
         this.characterRace = characterRace;
         this.characterAlignment = characterAlignment;

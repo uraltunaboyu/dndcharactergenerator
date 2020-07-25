@@ -20,9 +20,10 @@ public class RaceTest {
 
     @BeforeEach
     public void setup() {
-        testRace = new Race("Dwarf", new String[] {"test1", "test2"}, new String[] {"test3", "test4"},
-                new Constants.StandardLanguages[]{Common, Dwarvish}, new Constants.ExoticLanguages[0],
-                new Constants.Tools[] {SmithTools, BrewerSupplies, MasonTools}, new int[]{0,0,2,0,0,0}, 25);
+        testRace = new Race("Dwarf", new String[] {"test1", "test2"}, new String[] {"test1", "test2"},
+                new String[] {"test3", "test4"}, new Constants.StandardLanguages[]{Common, Dwarvish},
+                new Constants.ExoticLanguages[0], new Constants.Tools[] {SmithTools, BrewerSupplies, MasonTools},
+                new int[]{0,0,2,0,0,0}, 25);
     }
 
 
@@ -35,7 +36,7 @@ public class RaceTest {
 
     @Test
     public void namingTest() {
-        String name = testRace.generateName();
+        String name = testRace.generateName(true);
         ArrayList<String> possibleNames = new ArrayList<>();
         for(String firstName: firstNames) {
             for(String lastName: lastNames) {

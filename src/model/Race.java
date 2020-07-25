@@ -2,7 +2,8 @@ package model;
 
 public class Race {
     private String raceName;
-    private String[] firstnames;
+    private String[] malenames;
+    private String[] femalenames;
     private String[] lastnames;
     private Constants.StandardLanguages[] standardLanguages;
     private Constants.ExoticLanguages[] exoticLanguages;
@@ -10,11 +11,12 @@ public class Race {
     private int[] statIncreases;
     private int speed;
 
-    public Race(String raceName, String[] firstnames, String[] lastnames,
+    public Race(String raceName, String[] malenames, String[] femalenames ,String[] lastnames,
                 Constants.StandardLanguages[] standardLanguages, Constants.ExoticLanguages[] exoticLanguages,
                 Constants.Tools[] toolProficiencies, int[] statIncreases, int speed) {
         this.raceName = raceName;
-        this.firstnames = firstnames;
+        this.malenames = malenames;
+        this.femalenames = femalenames;
         this.lastnames = lastnames;
         this.standardLanguages = standardLanguages;
         this.exoticLanguages = exoticLanguages;
@@ -23,12 +25,17 @@ public class Race {
         this.speed = speed;
     }
 
-    public String generateName() {
-        return firstnames[(int) Math.random() * firstnames.length] + " " +
-                lastnames[(int) Math.random() * lastnames.length];
+    public String generateName(boolean isMale) {
+        return (isMale ? malenames[(int) (Math.random() * malenames.length)] : femalenames[(int) (Math.random() * femalenames.length)]) +
+                " " + lastnames[(int) (Math.random() * lastnames.length)];
     }
 
     public Constants.StandardLanguages[] getLanguages() {
         return standardLanguages;
+    }
+
+    @Override
+    public String toString() {
+        return raceName;
     }
 }

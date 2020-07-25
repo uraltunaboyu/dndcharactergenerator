@@ -7,6 +7,7 @@ import java.util.List;
 
 public class CharacterFactory {
     private String characterName;
+    private boolean characterIsMale;
     private Class characterClass;
     private Subclass characterSubclass;
     private Race characterRace;
@@ -29,6 +30,7 @@ public class CharacterFactory {
 
     public CharacterFactory() {
         characterAlignment = alignments[(int) (Math.random() * alignments.length)];
+        characterIsMale = (Math.random() < 0.5);
         characterLevel = 1;
         populateStats();
     }
@@ -36,7 +38,7 @@ public class CharacterFactory {
     public Character build() {
         fillStatProfArray();
         fillSkillProfArray();
-        return new Character(characterName, characterClass, characterRace,
+        return new Character(characterName, characterIsMale,characterClass, characterRace,
                 characterAlignment, characterClass.getHitDie(), stats, statProfs,
                 skillProfs, characterLevel);
     }
@@ -50,11 +52,10 @@ public class CharacterFactory {
     public void addToRaces(Race characterRace) {
         races.add(characterRace);
         this.characterRace = races.get((int) (Math.random() * races.size()));
-        characterName = characterRace.generateName();
+        characterName = characterRace.generateName(characterIsMale);
     }
 
     /*----------- Manage Stats -----------*/
-
     public void setStat(int index, int value) {
         if (0 <= index && index < 6){
             stats[index] = value;
@@ -108,13 +109,17 @@ public class CharacterFactory {
     }
 
     /*----------- Set Factory Props -----------*/
-
     public void setAdvantageRoll() {
         advantageRoll = true;
     }
 
     public void setCharacterName(String characterName) {
         this.characterName = characterName;
+    }
+
+    public void setCharacterIsMale(boolean characterIsMale) {
+        this.characterIsMale = characterIsMale;
+        characterName = characterRace.generateName(characterIsMale);
     }
 
     public void setCharacterAlignment(int alignmentCode) {

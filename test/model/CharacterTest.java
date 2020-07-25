@@ -25,7 +25,8 @@ public class CharacterTest {
         testClass = new Class("testClass", new Constants.skillNames[] {Athletics, Insight, Intimidation, Medicine, Persuasion, Intimidation},
                 new Constants.statNames[] {Wisdom, Charisma}, Constants.Dice.d10, new Constants.Armor[]{Light, Medium, Heavy, Shield},
                 new Constants.Weapons[] {Simple, Martial});
-        testRace = new Race("Dwarf", new String[] {"test1", "test2"}, new String[] {"test3", "test4"},
+        testRace = new Race("Dwarf", new String[] {"test1", "test2"},
+                new String[] {"test1", "test2"}, new String[] {"test3", "test4"},
                 new Constants.StandardLanguages[]{Common, Dwarvish}, new Constants.ExoticLanguages[0],
                 new Constants.Tools[] {SmithTools, BrewerSupplies, MasonTools}, new int[]{0,0,2,0,0,0}, 25);
         characterFactoryTest =  new CharacterFactory();

@@ -36,4 +36,9 @@ public class Class {
     public Constants.Dice getHitDie() {
         return hitDie;
     }
+
+    @Override
+    public String toString() {
+        return className;
+    }
 }
